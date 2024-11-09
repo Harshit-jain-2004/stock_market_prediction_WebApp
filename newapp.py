@@ -4,6 +4,9 @@ import matplotlib.pyplot as plt
 import yfinance as yf
 from keras.models import load_model
 import streamlit as st
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import LSTM
+from tensorflow.keras.layers import Dense
 
 
 st.title('Stock Prediction')
@@ -76,8 +79,13 @@ X_train = X_train.reshape(X_train.shape[0],X_train.shape[1] , 1)
 X_test = X_test.reshape(X_test.shape[0],X_test.shape[1] , 1)
 
 #loading model
-
-model = load_model('Updated_LSTM_model.h5')
+model = Sequential()
+model.add(LSTM(units=50,return_sequences=True,input_shape=(X_train.shape[1],1)))
+model.add(LSTM(units=50,return_sequences=True))
+model.add(LSTM(units=50))
+model.add(Dense(units=1,activation='linear'))
+model.compile(loss='mean_squared_error',optimizer='adam')
+model.fit(X_train,y_train,validation_data=(X_test,y_test),epochs=100,batch_size=64)
 
 #Predicitng on train and test data
 train_predict = model.predict(X_train)
