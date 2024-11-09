@@ -77,7 +77,7 @@ X_test = X_test.reshape(X_test.shape[0],X_test.shape[1] , 1)
 
 #loading model
 
-model = load_model('LSTM_model.h5')
+model = load_model('Updated_LSTM_model.h5')
 
 #Predicitng on train and test data
 train_predict = model.predict(X_train)
@@ -168,3 +168,6 @@ print(len(final_graph)-30+int(day_input))
 string1 = 'Predicted values after '+day_input+' days: '+str(final_graph[len(final_graph)-30+int(day_input)-1])
 print(string1)
 st.subheader(string1)
+
+
+
